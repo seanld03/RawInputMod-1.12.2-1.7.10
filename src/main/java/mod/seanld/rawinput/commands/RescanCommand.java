@@ -4,21 +4,20 @@ import mod.seanld.rawinput.RawInputHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
 
 public class RescanCommand extends CommandBase {
 	@Override
-	public String getName() {
+	public String getCommandName() {
 		return "rescan";
 	}
 
 	@Override
-	public String getUsage(ICommandSender sender) {
+	public String getCommandUsage(ICommandSender sender) {
 		return "Rescans input devices: /rescan";
 	}
 
 	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+	public void processCommand(ICommandSender sender, String[] args) throws CommandException {
 		RawInputHandler.rescan();
 	}
 	@Override

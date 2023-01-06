@@ -5,8 +5,8 @@ import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Mouse;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MouseHelper;
-import net.minecraft.util.text.TextComponentString;
 
 public class RawInputHandler {
     public static Controller[] controllers;
@@ -31,30 +31,32 @@ public class RawInputHandler {
     }
 
     public static void toggleRawInput() {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         float saveYaw = player.rotationYaw;
         float savePitch = player.rotationPitch;
 
         if (Minecraft.getMinecraft().mouseHelper instanceof RawMouseHelper) {
             Minecraft.getMinecraft().mouseHelper = new MouseHelper();
             Minecraft.getMinecraft().mouseHelper.grabMouseCursor();
-            Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Toggled OFF"));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Toggled OFF"));
         } else {
             Minecraft.getMinecraft().mouseHelper = new RawMouseHelper();
             Minecraft.getMinecraft().mouseHelper.grabMouseCursor();
-            Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Toggled ON"));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Toggled ON"));
         }
         player.rotationYaw = saveYaw;
         player.rotationPitch = savePitch;
     }
 
     public static void rescan() {
-        Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Rescanning input devices..."));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rescanning input devices..."));
         RawInputHandler.getMouse();
         if (RawInputHandler.mouse != null) {
-            Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Mouse Found."));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mouse found."));
         }
     }
+
+
 
     public static void startThread() {
         Thread inputThread = new Thread(() -> {

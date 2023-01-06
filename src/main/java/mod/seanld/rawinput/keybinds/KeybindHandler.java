@@ -1,11 +1,12 @@
 package mod.seanld.rawinput.keybinds;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
 import mod.seanld.rawinput.RawInputHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class KeybindHandler {
 
@@ -25,7 +26,6 @@ public class KeybindHandler {
         if (toggleKey.isPressed()) {
             RawInputHandler.toggleRawInput();
         }
-
         if (rescanKey.isPressed()) {
             RawInputHandler.rescan();
         }
