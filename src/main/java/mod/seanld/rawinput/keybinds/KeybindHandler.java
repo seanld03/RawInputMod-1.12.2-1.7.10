@@ -4,9 +4,8 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
 import mod.seanld.rawinput.RawInputHandler;
-import net.minecraft.client.Minecraft;
-import org.lwjgl.input.Keyboard;
 import net.minecraft.client.settings.KeyBinding;
+import org.lwjgl.input.Keyboard;
 
 public class KeybindHandler {
 
@@ -27,7 +26,7 @@ public class KeybindHandler {
             RawInputHandler.toggleRawInput();
         }
         if (rescanKey.isPressed()) {
-            RawInputHandler.rescan();
+            RawInputHandler.getMouse();
         }
     }
 }

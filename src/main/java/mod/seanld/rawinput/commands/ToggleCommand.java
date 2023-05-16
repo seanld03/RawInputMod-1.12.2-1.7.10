@@ -20,6 +20,7 @@ public class ToggleCommand extends CommandBase {
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         RawInputHandler.toggleRawInput();
     }
+
     @Override
     public int getRequiredPermissionLevel() {
         return -1;
