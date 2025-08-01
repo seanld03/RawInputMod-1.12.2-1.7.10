@@ -12,11 +12,15 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
+import net.java.games.input.Controller;  // 来自jinput
+import net.java.games.input.Mouse;       // 来自jinput
 
 public class RawInputHandler {
     public static int dx = 0;
     public static int dy = 0;
-
+    private Controller[] controllers;  // 声明控制器数组
+    private Controller[] mouseControllers;  // 声明鼠标控制器数组
+    private Mouse mouse;  // 声明鼠标实例
     private int worldJoinTimer;
 
     public static void init() {
