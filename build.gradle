@@ -25,6 +25,10 @@ import org.apache.commons.lang3.ArrayUtils;  // 需引入Apache Commons Lang库
 
 buildscript {
     repositories {
+       // 添加阿里云镜像（优先使用）
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/sonatype' }
         mavenCentral()
 
         maven {
@@ -36,10 +40,10 @@ buildscript {
             name = "GTNH Maven"
             url = "http://jenkins.usrv.eu:8081/nexus/content/groups/public/"
         }
-        maven {
-            name 'sonatype'
-            url 'https://oss.sonatype.org/content/repositories/snapshots/'
-        }
+      // maven {
+      //     name 'sonatype'
+      //     url 'https://oss.sonatype.org/content/repositories/snapshots/'
+      // }
         maven {
             name 'Scala CI dependencies'
             url 'https://repo1.maven.org/maven2/'
