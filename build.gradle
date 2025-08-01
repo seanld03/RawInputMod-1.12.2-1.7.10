@@ -21,6 +21,10 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
+import net.java.games.input.Controller;  // 来自jinput
+import net.java.games.input.Mouse;       // 来自jinput
+import org.apache.commons.lang3.ArrayUtils;  // 需引入Apache Commons Lang库
+
 buildscript {
     repositories {
         mavenCentral()
@@ -214,7 +218,8 @@ if (coreModClass) {
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
-
+    force 'org.lwjgl:lwjgl:3.3.1'
+    force 'org.lwjgl:lwjgl-glfw:3.3.1'
     // Make sure GregTech build won't time out
     System.setProperty("org.gradle.internal.http.connectionTimeout", 120000 as String)
     System.setProperty("org.gradle.internal.http.socketTimeout", 120000 as String)
@@ -357,6 +362,12 @@ dependencies {
     deobfCompile 'org.lwjgl:lwjgl-glfw:3.3.1'
     deobfCompile 'org.lwjgl:lwjgl-opengl:3.3.1'
     deobfCompile 'org.lwjgl:lwjgl-stb:3.3.1'
+    // 添加LWJGL原生库（根据系统自动选择）
+    deobfCompile 'org.lwjgl:lwjgl-platform:3.3.1:natives-windows'
+    deobfCompile 'org.lwjgl:lwjgl-platform:3.3.1:natives-linux'
+    deobfCompile 'org.lwjgl:lwjgl-platform:3.3.1:natives-macos'
+    deobfCompile 'net.java.jinput:jinput:2.0.9'  // 提供输入设备相关类
+    deobfCompile 'org.apache.commons:commons-lang3:3.12.0'
     }
     if (usesMixins.toBoolean() || forceEnableMixins.toBoolean()) {
         compile('com.gtnewhorizon:gtnhmixins:2.1.3')
