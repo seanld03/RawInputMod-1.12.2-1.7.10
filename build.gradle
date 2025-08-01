@@ -20,7 +20,25 @@ import java.util.concurrent.TimeUnit
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
-apply plugin: 'java'
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'idea'
+    id 'eclipse'
+    id 'scala'
+    id 'maven-publish'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.30' apply false
+    id 'org.jetbrains.kotlin.kapt' version '1.5.30' apply false
+    id 'com.google.devtools.ksp' version '1.5.30-1.0.0' apply false
+    id 'org.ajoberstar.grgit' version '4.1.1'
+    id 'com.github.johnrengelman.shadow' version '4.0.4'
+    id 'com.palantir.git-version' version '0.13.0' apply false
+    id 'de.undercouch.download' version '5.0.1'
+    id 'com.github.gmazzo.buildconfig' version '3.0.3' apply false
+    id 'com.diffplug.spotless' version '6.7.2' apply false
+    id 'com.modrinth.minotaur' version '2.+' apply false
+    id 'com.matthewprenger.cursegradle' version '1.4.0' apply false
+}
 buildscript {
     repositories {
         mavenCentral()
@@ -54,24 +72,7 @@ buildscript {
         implementation 'org.lwjgl:lwjgl-stb:3.3.1'
     }
 }
-plugins {
-    id 'java-library'
-    id 'idea'
-    id 'eclipse'
-    id 'scala'
-    id 'maven-publish'
-    id 'org.jetbrains.kotlin.jvm' version '1.5.30' apply false
-    id 'org.jetbrains.kotlin.kapt' version '1.5.30' apply false
-    id 'com.google.devtools.ksp' version '1.5.30-1.0.0' apply false
-    id 'org.ajoberstar.grgit' version '4.1.1'
-    id 'com.github.johnrengelman.shadow' version '4.0.4'
-    id 'com.palantir.git-version' version '0.13.0' apply false
-    id 'de.undercouch.download' version '5.0.1'
-    id 'com.github.gmazzo.buildconfig' version '3.0.3' apply false
-    id 'com.diffplug.spotless' version '6.7.2' apply false
-    id 'com.modrinth.minotaur' version '2.+' apply false
-    id 'com.matthewprenger.cursegradle' version '1.4.0' apply false
-}
+
 boolean settingsupdated = verifySettingsGradle()
 settingsupdated = verifyGitAttributes() || settingsupdated
 if (settingsupdated)
