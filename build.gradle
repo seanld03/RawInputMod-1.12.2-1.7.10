@@ -216,8 +216,12 @@ if (coreModClass) {
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
-    force 'org.lwjgl:lwjgl:3.3.1'
-    force 'org.lwjgl:lwjgl-glfw:3.3.1'
+    resolutionStrategy {
+        force 'org.lwjgl:lwjgl:3.3.1'
+        force 'org.lwjgl:lwjgl-glfw:3.3.1'
+        force 'org.lwjgl:lwjgl-opengl:3.3.1'
+        force 'org.lwjgl:lwjgl-stb:3.3.1'
+    }
     // Make sure GregTech build won't time out
     System.setProperty("org.gradle.internal.http.connectionTimeout", 120000 as String)
     System.setProperty("org.gradle.internal.http.socketTimeout", 120000 as String)
