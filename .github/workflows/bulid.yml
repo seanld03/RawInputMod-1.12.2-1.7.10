@@ -1,0 +1,41 @@
+name: Gradle Build 1.7.10  # 工作流名称
+
+# 触发条件：推送代码到main分支或创建PR到main分支时执行
+on:
+  push:
+    branches: [ "1.7.10" ]  # 替换为你的主分支名（如master）
+  pull_request:
+    branches: [ "1.7.10" ]
+
+jobs:
+  build:
+    # 运行环境：选择Ubuntu（也可改为windows-latest或macos-latest）
+    runs-on: windows-latest
+
+    steps:
+    - name: 拉取代码到工作流环境
+      uses: actions/checkout@v4  # GitHub官方的代码拉取Action
+
+    - name: 设置Java环境
+      uses: actions/setup-java@v4  # 配置Java版本
+      with:
+        java-version: '8'  # 根据项目需求指定Java版本（如11、17）
+        distribution: 'zulu'  # 使用Adoptium的OpenJDK
+        cache: gradle
+
+    - name: 赋予gradlew执行权限（Linux/macOS）
+      run: chmod +x gradlew  # 确保脚本可执行（Windows无需此步）
+
+    - name: 执行Gradle构建命令
+      run: .\gradlew build  # 运行构建（可替换为其他命令如test、assemble）
+
+    - name: 上传构建产物
+      uses: actions/upload-artifact@v4  # 保存构建生成的JAR/WAR等文件
+      with:
+        name: build-output
+        path: build/libs/*.jar  # 产物路径（根据项目实际输出目录调整）
+    - name: 发布Release
+      uses: softprops/action-gh-release@v1
+      if: github.ref == 'refs/heads/1.7.10'
+      with:
+        files: build/libs/*.jar
