@@ -25,10 +25,11 @@ import org.apache.commons.lang3.ArrayUtils;  // 需引入Apache Commons Lang库
 
 buildscript {
     repositories {
-       // 添加阿里云镜像（优先使用）
+       // 添加Google官方仓库（优先）
+        maven { url 'https://maven.google.com' }
+       // 添加阿里云镜像（补充）
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://maven.aliyun.com/repository/sonatype' }
         mavenCentral()
 
         maven {
