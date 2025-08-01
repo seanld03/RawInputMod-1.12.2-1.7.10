@@ -47,11 +47,6 @@ buildscript {
         //Overwrite the current ASM version to fix shading newer than java 8 applicatations.
         classpath 'org.ow2.asm:asm-debug-all-custom:5.0.3'  
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2.13'
-        // Add LWJGL 3.x for Java 21 compatibility
-        implementation 'org.lwjgl:lwjgl:3.3.1'
-        implementation 'org.lwjgl:lwjgl-glfw:3.3.1'
-        implementation 'org.lwjgl:lwjgl-opengl:3.3.1'
-        implementation 'org.lwjgl:lwjgl-stb:3.3.1'
     }
 }
 plugins {
@@ -357,6 +352,11 @@ dependencies {
         if (usesMixinDebug.toBoolean()) {
             runtimeOnly('org.jetbrains:intellij-fernflower:1.2.1.16')
         }
+    // 添加LWJGL依赖（使用deobfCompile适配Forge反混淆）
+    deobfCompile 'org.lwjgl:lwjgl:3.3.1'
+    deobfCompile 'org.lwjgl:lwjgl-glfw:3.3.1'
+    deobfCompile 'org.lwjgl:lwjgl-opengl:3.3.1'
+    deobfCompile 'org.lwjgl:lwjgl-stb:3.3.1'
     }
     if (usesMixins.toBoolean() || forceEnableMixins.toBoolean()) {
         compile('com.gtnewhorizon:gtnhmixins:2.1.3')
