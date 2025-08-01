@@ -48,6 +48,11 @@ buildscript {
         //Overwrite the current ASM version to fix shading newer than java 8 applicatations.
         classpath 'org.ow2.asm:asm-debug-all-custom:5.0.3'  
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2.13'
+        // Add LWJGL 3.x for Java 21 compatibility
+        implementation 'org.lwjgl:lwjgl:3.3.1'
+        implementation 'org.lwjgl:lwjgl-glfw:3.3.1'
+        implementation 'org.lwjgl:lwjgl-opengl:3.3.1'
+        implementation 'org.lwjgl:lwjgl-stb:3.3.1'
     }
 }
 plugins {
