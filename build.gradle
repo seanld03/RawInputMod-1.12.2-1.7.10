@@ -134,3 +134,5 @@ task prepareAssets(type: Copy) {
 
 classes.dependsOn(prepareAssets)
 
+
+apply from: 'native.gradle'

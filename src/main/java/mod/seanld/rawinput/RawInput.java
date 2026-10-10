@@ -5,7 +5,7 @@ import mod.seanld.rawinput.commands.ToggleCommand;
 import mod.seanld.rawinput.keybinds.KeybindHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -30,8 +30,8 @@ public class RawInput
 		ClientCommandHandler.instance.registerCommand(new RescanCommand());
 		ClientCommandHandler.instance.registerCommand(new ToggleCommand());
 		Minecraft.getMinecraft().mouseHelper = new RawMouseHelper();
-		MinecraftForge.EVENT_BUS.register(new KeybindHandler());
-		MinecraftForge.EVENT_BUS.register(new RawInputHandler());
+		FMLCommonHandler.instance().bus().register(new KeybindHandler());
+		FMLCommonHandler.instance().bus().register(new RawInputHandler());
 
 		RawInputHandler.init();
     }
