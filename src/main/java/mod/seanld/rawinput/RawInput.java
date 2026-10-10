@@ -11,11 +11,13 @@ import mod.seanld.rawinput.commands.ToggleCommand;
 import mod.seanld.rawinput.keybinds.KeybindHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(modid = RawInput.MODID, version = RawInput.VERSION, name = "Raw Input", useMetadata = true)
 public class RawInput {
     public static final String MODID = "rawinput";
+    public static final Logger LOGGER = LogManager.getLogger("Raw Input");
     public static final String VERSION = "1.4.2";
 
     @SideOnly(Side.CLIENT)
@@ -25,7 +27,7 @@ public class RawInput {
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
         Minecraft.getMinecraft().mouseHelper = new RawMouseHelper();
         FMLCommonHandler.instance().bus().register(new KeybindHandler());
-        MinecraftForge.EVENT_BUS.register(new RawInputHandler());
+        FMLCommonHandler.instance().bus().register(new RawInputHandler());
 
         RawInputHandler.init();
     }

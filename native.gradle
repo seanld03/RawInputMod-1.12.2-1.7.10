@@ -1,0 +1,26 @@
+def nativeArch = System.getProperty('os.arch')
+if (nativeArch == 'x86_64') nativeArch = 'amd64'
+if (nativeArch == 'arm64') nativeArch = 'aarch64'
+def nativeOutput = file("$buildDir/generated/rawinput/mod/seanld/rawinput/natives/linux-${nativeArch}/librawinput.so")
+
+task buildLinuxNative(type: Exec) {
+    onlyIf { System.getProperty('os.name').toLowerCase().contains('linux') }
+    inputs.files('native/linux_rawinput.c', 'native/raw_motion.h')
+    outputs.file(nativeOutput)
+    doFirst {
+        nativeOutput.parentFile.mkdirs()
+        def javaHome = file(System.getProperty('java.home'))
+        if (!new File(javaHome, 'include/jni.h').exists()) javaHome = javaHome.parentFile
+        def args = [System.getenv('CC') ?: 'cc', '-std=c99', '-O2', '-fPIC', '-shared',
+                    '-Wall', '-Wextra', '-Werror', "-I${javaHome}/include", "-I${javaHome}/include/linux"]
+        if (System.getenv('RAWINPUT_NATIVE_INCLUDE')) args.add("-I${System.getenv('RAWINPUT_NATIVE_INCLUDE')}")
+        args.addAll(['native/linux_rawinput.c', '-Wl,-z,relro,-z,now', '-Wl,-z,noexecstack',
+                     '-l:libX11.so.6', '-l:libXi.so.6', '-ldl', '-o', nativeOutput.absolutePath])
+        commandLine args
+    }
+}
+
+processResources {
+    dependsOn buildLinuxNative
+    from("$buildDir/generated/rawinput")
+}

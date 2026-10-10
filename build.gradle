@@ -33,7 +33,7 @@ buildscript {
         maven {
             // GTNH ForgeGradle and ASM Fork
             name = "GTNH Maven"
-            url = "http://jenkins.usrv.eu:8081/nexus/content/groups/public/"
+            url = "https://nexus.gtnewhorizons.com/repository/public/"
         }
         maven {
             name 'sonatype'
@@ -47,7 +47,7 @@ buildscript {
     dependencies {
         //Overwrite the current ASM version to fix shading newer than java 8 applicatations.
         classpath 'org.ow2.asm:asm-debug-all-custom:5.0.3'  
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2.13'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2.11.dirty'
     }
 }
 plugins {
@@ -332,7 +332,7 @@ repositories {
     if (usesMixins.toBoolean() || forceEnableMixins.toBoolean()) {
         maven {
             name = "GTNH Maven"
-            url = "http://jenkins.usrv.eu:8081/nexus/content/groups/public/"
+            url = "https://nexus.gtnewhorizons.com/repository/public/"
         }
         if (usesMixinDebug.toBoolean()) {
             maven {
@@ -793,7 +793,7 @@ task updateBuildScript {
     }
 }
 
-if (!project.getGradle().startParameter.isOffline() && isNewBuildScriptVersionAvailable(projectDir.toString())) {
+if (autoUpdateBuildScript.toBoolean() && !project.getGradle().startParameter.isOffline() && isNewBuildScriptVersionAvailable(projectDir.toString())) {
     if (autoUpdateBuildScript.toBoolean()) {
         performBuildScriptUpdate(projectDir.toString())
     } else {
@@ -1114,3 +1114,5 @@ def getSecondaryArtifacts() {
     if (apiPackage) secondaryArtifacts += [apiJar]
     return secondaryArtifacts
 }
+
+apply from: 'native.gradle'

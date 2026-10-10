@@ -4,21 +4,32 @@ import net.minecraft.util.MouseHelper;
 import org.lwjgl.input.Mouse;
 
 public class RawMouseHelper extends MouseHelper {
+    private final int[] motion = new int[2];
+
     @Override
     public void mouseXYChange() {
-        this.deltaX = RawInputHandler.dx;
-        RawInputHandler.dx = 0;
-        this.deltaY = -RawInputHandler.dy;
-        RawInputHandler.dy = 0;
+        RawInputHandler.updateCapture();
+        if (RawInputHandler.isRawInputActive()) {
+            Mouse.getDX();
+            Mouse.getDY();
+            RawInputHandler.consumeMotion(motion);
+            deltaX = motion[0];
+            deltaY = -motion[1];
+        } else {
+            super.mouseXYChange();
+        }
     }
 
     @Override
     public void grabMouseCursor() {
-        if (Boolean.parseBoolean(System.getProperty("fml.noGrab", "false"))) return;
-        Mouse.setGrabbed(true);
-        this.deltaX = 0;
-        RawInputHandler.dx = 0;
-        this.deltaY = 0;
-        RawInputHandler.dy = 0;
+        super.grabMouseCursor();
+        RawInputHandler.resetMotion();
+        RawInputHandler.updateCapture();
+    }
+
+    @Override
+    public void ungrabMouseCursor() {
+        RawInputHandler.stopCapture();
+        super.ungrabMouseCursor();
     }
 }
